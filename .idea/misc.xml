@@ -3,13 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_error.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/shape_12dp.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/shape_12dp_radius.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/shape_2dp_radius.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_get_location.xml" value="0.25524139404296875" />
-        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.273284912109375" />
+        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.22793273925781254" />
         <entry key="app/src/main/res/layout/item_weather.xml" value="0.4725860595703125" />
         <entry key="app/src/main/res/layout/layout_loading.xml" value="0.2998046875" />
         <entry key="app/src/main/res/layout/snackbar_error.xml" value="0.1" />

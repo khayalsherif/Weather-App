@@ -46,8 +46,8 @@ class GetLocationFragment : BaseFragment<FragmentGetLocationBinding, GetLocation
 
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
-                latitude = location?.latitude ?: 0.0
-                longutude = location?.longitude ?: 0.0
+                latitude = location?.latitude ?: 40.409264
+                longutude = location?.longitude ?: 49.867092
             }
 
         binding.button.setOnClickListener {

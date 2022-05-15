@@ -17,6 +17,7 @@ import com.example.weatherapp.utils.gone
 import com.example.weatherapp.utils.visible
 import com.example.weatherapp.view_model.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -43,12 +44,14 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding, WeatherViewModel>()
         binding = getBinding()
         navController = findNavController()
         viewModel.getWeatherInformation(args.latitude.toDouble(), args.longitude.toDouble())
+        binding.toolbar.setNavigationOnClickListener { navController.popBackStack() }
 
         configurationRecyclerView()
         collectTheResponse()
     }
 
     private fun configurationRecyclerView() {
+        binding.rcView.itemAnimator = SlideInLeftAnimator().apply { addDuration = 500 }
         binding.rcView.adapter = weatherAdapter
         binding.rcView.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -58,6 +61,7 @@ class WeatherFragment : BaseFragment<FragmentWeatherBinding, WeatherViewModel>()
             viewModel.weatherResponse.collect { response ->
                 when (response) {
                     is NetworkResult.Success -> {
+                        binding.weatherData = response.data
                         weatherAdapter.setData(response.data?.daily!!)
                         binding.layoutLoading.gone()
                     }
