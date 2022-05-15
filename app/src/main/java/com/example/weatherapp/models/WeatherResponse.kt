@@ -158,7 +158,11 @@ data class WeatherResponse(
         val morn: Double,
         @SerializedName("night")
         val night: Double
-    )
+    ) {
+        fun getDayTemperature(): String {
+            return (day.toInt() / 10).toString() + "C"
+        }
+    }
 
     data class WeatherX(
         @SerializedName("description")
