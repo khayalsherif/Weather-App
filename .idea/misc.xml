@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/ic_error.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/shape_2dp_radius.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_get_location.xml" value="0.3438308715820313" />
+        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.273284912109375" />
+        <entry key="app/src/main/res/layout/item_weather.xml" value="0.23805389404296876" />
+        <entry key="app/src/main/res/layout/layout_loading.xml" value="0.2998046875" />
+        <entry key="app/src/main/res/layout/snackbar_error.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

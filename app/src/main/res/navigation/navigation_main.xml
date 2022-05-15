@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/getLocationFragment">
+
+    <fragment
+        android:id="@+id/getLocationFragment"
+        android:name="com.example.weatherapp.ui.fragments.GetLocationFragment"
+        android:label="fragment_get_location">
+        <action
+            android:id="@+id/action_getLocationFragment_to_weatherFragment"
+            app:destination="@id/weatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.example.weatherapp.ui.fragments.WeatherFragment"
+        android:label="fragment_weather">
+        <argument
+            android:name="latitude"
+            android:defaultValue="40.409264"
+            app:argType="float" />
+        <argument
+            android:name="longitude"
+            android:defaultValue="49.867092"
+            app:argType="float" />
+    </fragment>
+</navigation>
