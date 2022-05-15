@@ -4,9 +4,11 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.os.Looper
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -14,9 +16,9 @@ import com.example.weatherapp.R
 import com.example.weatherapp.base.BaseFragment
 import com.example.weatherapp.databinding.FragmentGetLocationBinding
 import com.example.weatherapp.view_model.GetLocationViewModel
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class GetLocationFragment : BaseFragment<FragmentGetLocationBinding, GetLocationViewModel>() {
@@ -25,9 +27,8 @@ class GetLocationFragment : BaseFragment<FragmentGetLocationBinding, GetLocation
     private lateinit var viewModel: GetLocationViewModel
     private lateinit var navController: NavController
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var latitude = 0.0
-    private var longutude = 0.0
+    private var longitude = 0.0
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_get_location
@@ -42,22 +43,25 @@ class GetLocationFragment : BaseFragment<FragmentGetLocationBinding, GetLocation
         super.onViewCreated(view, savedInstanceState)
         binding = getBinding()
         navController = findNavController()
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                latitude = location?.latitude ?: 40.409264
-                longutude = location?.longitude ?: 49.867092
-            }
+        val permission = ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.ACCESS_FINE_LOCATION,
+        )
 
         binding.button.setOnClickListener {
-            navController.navigate(
-                GetLocationFragmentDirections.actionGetLocationFragmentToWeatherFragment(
-                    latitude.toFloat(), longutude.toFloat()
+            if (permission == PackageManager.PERMISSION_GRANTED) {
+                navController.navigate(
+                    GetLocationFragmentDirections.actionGetLocationFragmentToWeatherFragment(
+                        latitude.toFloat(), longitude.toFloat()
+                    )
                 )
-            )
+            } else {
+                fetchLocation()
+            }
         }
 
+        requestLocationUpdates()
         fetchLocation()
     }
 
@@ -91,6 +95,30 @@ class GetLocationFragment : BaseFragment<FragmentGetLocationBinding, GetLocation
                 }
             }
         }
+
+    private fun requestLocationUpdates() {
+        val locationRequest = LocationRequest.create().apply {
+            interval = TimeUnit.MINUTES.toMillis(2000)
+            fastestInterval = TimeUnit.MINUTES.toMillis(1000)
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+        val client: FusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        val permission = ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.ACCESS_FINE_LOCATION,
+        )
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+            client.requestLocationUpdates(locationRequest, object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult) {
+                    val location: Location = locationResult.lastLocation
+                    latitude = location.latitude
+                    longitude = location.longitude
+                }
+            }, Looper.myLooper()!!)
+        }
+    }
 
 
 }
